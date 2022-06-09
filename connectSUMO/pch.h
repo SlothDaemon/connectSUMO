@@ -13,8 +13,5 @@
 #include <conio.h>
 #include <tchar.h>
 #include <iostream>
-#include <tuple>
-#include <array>
-#include <vector>
 
 #endif //PCH_H
