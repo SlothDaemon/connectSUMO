@@ -22,7 +22,7 @@ extern "C"
 	TCHAR trafficMessage[] = TEXT("Traffic message.");
 	TCHAR boolMessage[] = TEXT("false");
 
-	std::tuple<HANDLE, LPCTSTR> reserveMemory(TCHAR memName[], int bufferSize) {
+	memLoc reserveMemory(TCHAR memName[], int bufferSize) {
 		HANDLE hMapFile;
 		LPCTSTR pBuf;
 
@@ -56,7 +56,11 @@ extern "C"
 			exit(1);
 		}
 
-		return std::make_tuple(hMapFile, pBuf);
+		memLoc location;
+		location.handle = hMapFile;
+		location.pointer = pBuf;
+
+		return location;
 	}
 
 	void closeMemory(LPCTSTR map, HANDLE handle) {
@@ -64,24 +68,15 @@ extern "C"
 		CloseHandle(handle);
 	}
 
-	int reserveAllMemory(handlesAndPointers hap, int networkSize, int trafficSize, int boolSize) {
+	int reserveAllMemory(locus pointers, int networkSize, int trafficSize, int boolSize) {
 		std::cout << "Reserving Memory!\n";
-		HANDLE boolHandle;
-		LPCTSTR boolMap;
+		memLoc bools = reserveMemory(boolName, networkSize);
+		memLoc network = reserveMemory(networkName, trafficSize);
+		memLoc traffic = reserveMemory(trafficName, boolSize);
 
-		HANDLE networkHandle;
-		LPCTSTR networkMap;
-
-		HANDLE trafficHandle;
-		LPCTSTR trafficMap;
-
-		std::tie(boolHandle, boolMap) = reserveMemory(boolName, networkSize);
-		std::tie(networkHandle, networkMap) = reserveMemory(networkName, trafficSize);
-		std::tie(trafficHandle, trafficMap) = reserveMemory(trafficName, boolSize);
-
-		hap.content[0] = { boolHandle, boolMap };
-		hap.content[1] = { networkHandle, networkMap };
-		hap.content[2] = { trafficHandle, trafficMap };
+		pointers.bools = bools;
+		pointers.network = network;
+		pointers.traffic = traffic;
 
 		return 0;
 	}
@@ -91,7 +86,7 @@ extern "C"
 	}
 
 	void writeNetwork(PVOID networkMap, TCHAR networkMessage[]) {
-		CopyMemory((PVOID)networkMap, networkMessage, (_tcslen(networkMessage) * sizeof(TCHAR)));
+		CopyMemory(networkMap, networkMessage, (_tcslen(networkMessage) * sizeof(TCHAR)));
 	}
 
 	LPCTSTR readReservedMemory(TCHAR szName[], int bufferSize)
@@ -127,7 +122,7 @@ extern "C"
 		}
 
 		#if DEBUG 
-			MessageBox(NULL, pBuf, TEXT("Process2"), MB_OK);
+			MessageBox(NULL, pBuf, TEXT("Reading shared memory"), MB_OK);
 		#endif
 
 		UnmapViewOfFile(pBuf);
