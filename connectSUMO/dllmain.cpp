@@ -22,7 +22,7 @@ extern "C"
 	TCHAR trafficMessage[] = TEXT("Traffic message.");
 	TCHAR boolMessage[] = TEXT("false");
 
-	memLoc reserveMemory(TCHAR memName[], int bufferSize) {
+	MemLoc reserveMemory(TCHAR memName[], int bufferSize) {
 		HANDLE hMapFile;
 		LPCTSTR pBuf;
 
@@ -56,7 +56,7 @@ extern "C"
 			exit(1);
 		}
 
-		memLoc location;
+		MemLoc location;
 		location.handle = hMapFile;
 		location.pointer = pBuf;
 
@@ -68,11 +68,11 @@ extern "C"
 		CloseHandle(handle);
 	}
 
-	int reserveAllMemory(locus pointers, int networkSize, int trafficSize, int boolSize) {
+	int reserveAllMemory(Locus pointers, int networkSize, int trafficSize, int boolSize) {
 		std::cout << "Reserving Memory!\n";
-		memLoc bools = reserveMemory(boolName, networkSize);
-		memLoc network = reserveMemory(networkName, trafficSize);
-		memLoc traffic = reserveMemory(trafficName, boolSize);
+		MemLoc bools = reserveMemory(boolName, networkSize);
+		MemLoc network = reserveMemory(networkName, trafficSize);
+		MemLoc traffic = reserveMemory(trafficName, boolSize);
 
 		pointers.bools = bools;
 		pointers.network = network;

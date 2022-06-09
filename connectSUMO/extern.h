@@ -4,18 +4,18 @@
 #define CONNECTSUMO_API __declspec(dllexport) 
 
 extern "C" {
-	class memLoc {
+	class MemLoc {
 	public:
 		HANDLE handle;
 		LPCTSTR pointer;
 	};
-	class locus {
+	class Locus {
 	public:
-		memLoc bools;
-		memLoc network;
-		memLoc traffic;
+		MemLoc bools;
+		MemLoc network;
+		MemLoc traffic;
 	};
-	CONNECTSUMO_API int reserveAllMemory(locus pointers, int networkSize, int trafficSize, int boolSize);
+	CONNECTSUMO_API int reserveAllMemory(Locus pointers, int networkSize, int trafficSize, int boolSize);
 	CONNECTSUMO_API void closeMemory(LPCTSTR map, HANDLE handle);
 	CONNECTSUMO_API void writeBool(PVOID boolMap, TCHAR boolMessage[], int boolSize = 10);
 	CONNECTSUMO_API void writeNetwork(PVOID networkMap, TCHAR networkMessage[]);
