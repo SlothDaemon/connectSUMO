@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "extern.h"
 
-extern "C++"
+extern "C"
 {
 	// These are the names with which to address the locations in the pagefile for 
 	// their respective contents.They are set in stone, and if any other application
@@ -64,7 +64,7 @@ extern "C++"
 		CloseHandle(handle);
 	}
 
-	int ReserveAllMemory(handlesAndPointers hap, int networkSize, int trafficSize, int boolSize) {
+	int reserveAllMemory(handlesAndPointers hap, int networkSize, int trafficSize, int boolSize) {
 		std::cout << "Reserving Memory!\n";
 		HANDLE boolHandle;
 		LPCTSTR boolMap;
