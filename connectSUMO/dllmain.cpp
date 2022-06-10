@@ -2,6 +2,22 @@
 #include "pch.h"
 #include "extern.h"
 
+char* pointerToStr(LPTSTR annoyingAsshole) {
+	/// <summary>
+	/// TODO: Change into some vague unclear unknown default function provided by some nerd at Microsoft
+	/// TODO: Delete anything created by new. 
+	/// </summary>
+	/// <param name="annoyingAsshole"></param>
+	/// <returns></returns>
+	std::wstring data(annoyingAsshole);
+	int guessedBuffSize = sizeof(data) + 2;
+
+	char* str = new char[guessedBuffSize];
+	sprintf_s(str, guessedBuffSize, "%ls", data.c_str());
+
+	return str;
+}
+
 extern "C"
 {
 	// These are the names with which to address the locations in the pagefile for 
@@ -89,10 +105,10 @@ extern "C"
 		CopyMemory(networkMap, networkMessage, (_tcslen(networkMessage) * sizeof(TCHAR)));
 	}
 
-	LPCTSTR readReservedMemory(TCHAR szName[], int bufferSize)
+	char* readReservedMemory(TCHAR szName[], int bufferSize)
 	{
 		HANDLE hMapFile;
-		LPCTSTR pBuf;
+		LPTSTR pBuf;
 
 		hMapFile = OpenFileMapping(
 			FILE_MAP_ALL_ACCESS,   // read/write access
@@ -121,14 +137,13 @@ extern "C"
 			exit(1);
 		}
 
-		#if DEBUG 
-			MessageBox(NULL, pBuf, TEXT("Reading shared memory"), MB_OK);
-		#endif
+		//MessageBox(NULL, pBuf, TEXT("Reading shared memory"), MB_OK);
 
-		UnmapViewOfFile(pBuf);
-		CloseHandle(hMapFile);
+		return pointerToStr(pBuf);
+	}
 
-		return pBuf;
+	void deleteCharPointer(char* memoryLeak) {
+		delete memoryLeak;
 	}
 }
 

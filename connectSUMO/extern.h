@@ -19,5 +19,6 @@ extern "C" {
 	CONNECTSUMO_API void closeMemory(LPCTSTR map, HANDLE handle);
 	CONNECTSUMO_API void writeBool(PVOID boolMap, TCHAR boolMessage[], int boolSize = 10);
 	CONNECTSUMO_API void writeNetwork(PVOID networkMap, TCHAR networkMessage[]);
-	CONNECTSUMO_API LPCTSTR readReservedMemory(TCHAR szName[], int bufferSize);
+	CONNECTSUMO_API char* readReservedMemory(TCHAR szName[], int bufferSize);
+	CONNECTSUMO_API void deleteCharPointer(char* memoryLeak);
 }
