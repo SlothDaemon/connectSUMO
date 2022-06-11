@@ -1,9 +1,9 @@
 # connectSUMO
 dll to connect Unity with Sumo
 
-This branch utilises two extra libraries which you have to install for Visual Studio
-ATL v142/143
-MFC v142/143
+This branch utilises two extra libraries which you have to install for Visual Studio:  
+- ATL v142/143  
+- MFC v142/143  
 
 To open the solution, first modify your Visual Studio installation via the Visual Studio installer.
 Find your installation and click Modify.
