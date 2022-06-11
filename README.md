@@ -13,7 +13,7 @@ In this same list, search for "C++ MFC for latest v142 build tools (x86 & x64)".
 These libraries together can be around 1.5GB in size.  
 
 
-In order to test the .dll, compile it first, or download it from the latest (pre)release of this repo. 
+In order to test the .dll, compile it first, or download it from the latest (pre)release of this repo.   
 Should anything go wrong during building, first make sure that the project's properties do NOT prefer x32 bit, and that unsafe code is allowed.  
 Additionally, should anything go wrong with regards to running the test after compilation, make sure the dll is in the correct folder.  
 The test program has the location hardcoded in for the sake our time, so just make sure that's all right.  
